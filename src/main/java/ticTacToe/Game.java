@@ -696,8 +696,7 @@ public class Game {
 	/**
 	 * 
 	 * @param a
-	 * @throws throws
-	 *             IllegalMoveException of the there is an illegal move by one of
+	 * @throws IllegalMoveException of the there is an illegal move by one of
 	 *             the agents. This would just exit the programme.
 	 */
 	public static void main(String a[]) throws IllegalMoveException {

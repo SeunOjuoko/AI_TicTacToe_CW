@@ -1,15 +1,18 @@
 package ticTacToe;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
- * A Q-Learning agent with a Q table, i.e. a table of Q-Values. This tables is implemented as a {@link java.util.HashMap} from {@link Game}
- * objects to another HashMap from Moves to Q-Values. It could be implemented in many other ways too, but I thought this seemed the simplest.
- *  
- *  
+ * A Q-Learning agent with a Q-Table, i.e. a table of Q-Values. This table is implemented in the {@link QTable} class.
+ * 
+ *  The methods to implement are: 
+ * (1) {@link QLearningAgent#train}
+ * (2) {@link QLearningAgent#extractPolicy}
+ * 
+ * Your agent acts in a {@link TTTEnvironment} which provides the method {@link TTTEnvironment#executeMove} which returns an {@link Outcome} object, in other words
+ * an [s,a,r,s']: source state, action taken, reward received, and the target state after the opponent has played their move. You may want/need to edit
+ * {@link TTTEnvironment} - but you probably won't need to.
  * @author ae187
- *
  */
 
 public class QLearningAgent extends Agent {
@@ -24,8 +27,16 @@ public class QLearningAgent extends Agent {
 	 */
 	int numEpisodes=100;
 	
+	/**
+	 * The discount factor (gamma)
+	 */
 	double discount=0.9;
 	
+	
+	/**
+	 * The epsilon in the epsilon greedy policy used during training.
+	 */
+	double epsilon=0.1;
 	
 	/**
 	 * This is the Q-Table. To get an value for an (s,a) pair, i.e. a (game, move) pair, you can do
@@ -40,7 +51,7 @@ public class QLearningAgent extends Agent {
 	/**
 	 * This is the Reinforcement Learning environment that this agent will interact with when it is training.
 	 * By default, the opponent is the random agent which should make your q learning agent learn the same policy 
-	 * as your value iteration & policy iteration agents.
+	 * as your value iteration and policy iteration agents.
 	 */
 	TTTEnvironment env=new TTTEnvironment();
 	
@@ -73,7 +84,11 @@ public class QLearningAgent extends Agent {
 		{
 			List<Move> moves=g.getPossibleMoves();
 			for(Move m: moves)
+			{
 				this.qTable.addQValue(g, m, 0.0);
+				//System.out.println("initing q value. Game:"+g);
+				//System.out.println("Move:"+m);
+			}
 			
 		}
 		
@@ -90,28 +105,62 @@ public class QLearningAgent extends Agent {
 	
 	
 	/**
-	 *  Implement this method. It should play N = this.numEpisodes episodes of Tic Tac Toe with the TTTEnvironment, updating Q-Values according 
-	 *  to the Q-Learning algorithm as and where required. The agent plays according to an epsilon-greedy policy where with the probability epsilon the
-	 *  agent explores, and with probability 1-epsilon, it exploits.
+	 *  Implement this method. It should play {@code this.numEpisodes} episodes of Tic-Tac-Toe with the TTTEnvironment, updating q-values according 
+	 *  to the Q-Learning algorithm as required. The agent should play according to an epsilon-greedy policy where with the probability {@code epsilon} the
+	 *  agent explores, and with probability {@code 1-epsilon}, it exploits. 
+	 *  
+	 *  At the end of this method you should always call the {@code extractPolicy()} method to extract the policy from the learned q-values. This is currently
+	 *  done for you on the last line of the method.
 	 */
 	
 	public void train()
 	{
+		/* 
+		 * YOUR CODE HERE
+		 */
 		
 		
-		
+		//--------------------------------------------------------
+		//you shouldn't need to delete the following lines of code.
+		this.policy=extractPolicy();
+		if (this.policy==null)
+		{
+			System.out.println("Unimplemented methods! First implement the train() & extractPolicy methods");
+			//System.exit(1);
+		}
 	}
 	
-	/**
+	/** Implement this method. It should use the q-values in the {@code qTable} to extract a policy and return it.
 	 *
 	 * @return the policy currently inherent in the QTable
 	 */
 	public Policy extractPolicy()
 	{
+		/* 
+		 * YOUR CODE HERE
+		 */
+		
+		
 		return null;
 		
 	}
 	
+	public static void main(String a[]) throws IllegalMoveException
+	{
+		//Test method to play your agent against a human agent (yourself).
+		QLearningAgent agent=new QLearningAgent();
+		
+		HumanAgent d=new HumanAgent();
+		
+		Game g=new Game(agent, d, d);
+		g.playOut();
+		
+		
+		
+
+		
+		
+	}
 	
 	
 	

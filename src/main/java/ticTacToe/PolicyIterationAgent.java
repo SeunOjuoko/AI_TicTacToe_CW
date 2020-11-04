@@ -118,7 +118,7 @@ public class PolicyIterationAgent extends Agent {
 	
 	
 	/**
-	 * Performs policy evaluation steps until the maximum change in values is less than {@param delta}, in other words
+	 * Performs policy evaluation steps until the maximum change in values is less than {@code delta}, in other words
 	 * until the values under the currrent policy converge. After running this method, 
 	 * the {@link PolicyIterationAgent#policyValues} map should contain the values of each reachable state under the current policy. 
 	 * You should use the {@link TTTMDP} {@link PolicyIterationAgent#mdp} provided to do this.
@@ -135,7 +135,7 @@ public class PolicyIterationAgent extends Agent {
 	
 	
 	/**This method should be run AFTER the {@link PolicyIterationAgent#evaluatePolicy} train method to improve the current policy according to 
-	 * {@link PolicyIterationAgent#valueFuncion}. You will need to do a single step of expectimax from each game (state) key in {@link PolicyIterationAgent#curPolicy} 
+	 * {@link PolicyIterationAgent#policyValues}. You will need to do a single step of expectimax from each game (state) key in {@link PolicyIterationAgent#curPolicy} 
 	 * to look for a move/action that potentially improves the current policy. 
 	 * 
 	 * @return true if the policy improved. Returns false if there was no improvement, i.e. the policy already returned the optimal actions.

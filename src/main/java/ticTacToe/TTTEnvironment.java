@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This is a Reinforcement Learning environment for Tic Tac Toe. Like everywhere else, the opponent here is modeled as part 
- * of the environment, and is always assigned as the 'O' agent.
+ * This is a Reinforcement Learning environment for TicTacToe, to be used in conjunction with Reinforcement Learning (RL) agents. Like everywhere else, 
+ * the opponent here is modeled as part of the environment, is by default a {@link RandomAgent} and is always assigned as the 'O' agent;
+ * whereas the RL agent (e.g. {@link QLearningAgent}) interacting with this environment always plays as 'X'. The key method to be used from this class
+ * is the {@link TTTEnvironment#executeMove} method which takes a move (from X) and returns an {@link Outcome} object containing reward received as well
+ * as the target state.
  * @author ae187
  *
  */
@@ -20,7 +23,7 @@ public class TTTEnvironment {
 	
 	
 	double winReward=10.0;
-	double loseReward=-10.0;
+	double loseReward=-50.0;
 	double livingReward=-1.00;
 	double drawReward=0.0;
 	
@@ -65,7 +68,7 @@ public class TTTEnvironment {
 	}
 	
 	/**
-	 * performs action/move {@code m} and returns an environment outcome {@code o}. Note that the outcome returned includes
+	 * Performs action/move {@code m} and returns an environment outcome {@code o}. Note that the outcome returned includes
 	 * the opponent's move, i.e. it is the game state AFTER the opponent has also played. The only exception to this is 
 	 * when our agent's move leads to a terminal state (winning, losing or draw). 
 	 * @param m
@@ -81,6 +84,11 @@ public class TTTEnvironment {
 		else if (game.isTerminal())
 		{
 			System.out.println("Executing move in terminal state. Returning null.");
+			return null;
+		}
+		else if (m.who.getName()!='X')
+		{
+			System.out.println("Trying to executing O move - the RL agent must always play as X. Returning null Outcome object.");
 			return null;
 		}
 		
