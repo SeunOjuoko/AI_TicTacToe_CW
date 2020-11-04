@@ -1,0 +1,3 @@
+junit:
+  script:
+    - mvn clean test
