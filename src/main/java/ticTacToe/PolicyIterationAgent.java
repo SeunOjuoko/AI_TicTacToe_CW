@@ -264,8 +264,6 @@ public class PolicyIterationAgent extends Agent {
 
 		g.playOut();
 
-
 	}
-
 
 }
