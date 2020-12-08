@@ -21,10 +21,10 @@ import java.util.List;
 
 public class TTTMDP {
 
-	double winReward=10.0;
-	double loseReward=-50.0;
-	double livingReward=-1.00;
-	double drawReward=0.0;
+	double winReward = 10.0;
+	double loseReward = -50.0;
+	double livingReward = -1.00;
+	double drawReward = 0.0;
 	
 	public TTTMDP() {
 	
@@ -48,7 +48,8 @@ public class TTTMDP {
 	 * @param m
 	 * @return
 	 */
-	public List<TransitionProb> generateTransitions(Game g, Move m)
+	//This takes a game and move as an argument to return a list of transitions probs
+	public List<TransitionProb> generateTransitions(Game g, Move m)	//Pairing between an outcome (STATE take an ACTION and get a REWARD STATE) that gets a probability
 	{
 		if (g.whoseTurn.getName()!=m.who.getName())
 			throw new IllegalArgumentException("It's not "+m.who.getName()+"'s turn in game. This shouldn't happen!");

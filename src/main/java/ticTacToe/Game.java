@@ -525,17 +525,17 @@ public class Game {
 			// System.out.println("---------");
 			// }
 
-			System.out.println("Playing move: " + m);
+			//System.out.println("Playing move: " + m);
 			executeMove(m);
-			System.out.println(this);
+			//System.out.println(this);
 
 		}
 		if (this.state == X_WON) {
-			System.out.println("X won!");
+		//	System.out.println("X won!");
 		} else if (this.state == O_WON) {
-			System.out.println("O won!");
-		} else
-			System.out.println("It's a draw.");
+		//	System.out.println("O won!");
+		}// else
+		//	System.out.println("It's a draw.");
 
 	}
 

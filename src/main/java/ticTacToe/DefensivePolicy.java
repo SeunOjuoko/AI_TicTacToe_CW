@@ -24,13 +24,13 @@ public Move getMove(Game g) {
 			if (resulting.getState()==Game.X_WON||resulting.getState()==Game.O_WON)
 			{
 				Move newMove=new Move(m.who.getName()=='X'?'O':'X', m.x,m.y);
-				System.out.println("Playing defensive move");
+				//System.out.println("Playing defensive move");
 				return newMove;
 			}
 		}
 		
 		Random r=new Random();
-		System.out.println("Playing random move");
+		//System.out.println("Playing random move");
 		Move randomMove=moves.get(r.nextInt(moves.size()));
 		Move myMove=new Move(randomMove.who.getName()=='X'?'O':'X', randomMove.x,randomMove.y);
 		

@@ -34,7 +34,7 @@ public class ValueIterationAgent extends Agent {
 	/**
 	 * the number of iterations to perform - feel free to change this/try out different numbers of iterations
 	 */
-	int k=10;
+	int k=50;
 	
 	
 	/**
@@ -100,10 +100,45 @@ public class ValueIterationAgent extends Agent {
 	 * 
 	 *
 	 */
+	//Loop k in an iteration 10 times
+	//Loop over each game state game g
+	//Loop over moves m in game g
+	//Loop over all outcomes from (g.m)
+	//Update VI (hashmap)
+	//
 	public void iterate()
 	{
-		/* YOUR CODE HERE
-		 */
+		//This begins by iterating through the Hashmap list (k=50) times
+		for(int i = 0; i < k; i++) { 	
+			//This goes through all the game state as an object game called g
+			for(Game g: valueFunction.keySet()) { 
+				//To find the Biggest Q value, the value is originally set to  we set is to the lowest possible value for the
+				double biggestQ = -10000;
+				//This goes through the list of each possible game moves that the agent can make called m
+				for(Move m: g.getPossibleMoves() ) {    
+					double totalQ = 0;
+					//This loops object generates a list that contains two values of the outcomes for the game and move 
+					for(TransitionProb s: mdp.generateTransitions(g,m)) { 
+						//The variables for Q values that are sPrime, localReward and prob are initialised 
+						Game sPrime = s.outcome.sPrime;
+						double reward = s.outcome.localReward;
+						double probability = s.prob;
+						//This equation works out Q value within the Bellmov equation 
+						double valueQ = probability*(reward+(valueFunction.get(sPrime))); 
+						//Each Q is stored into the list of Q's called total Q
+						totalQ += valueQ;
+					}
+					//Each loop iteration will have a range of total Q values
+					//This conditional statements maintains the biggest Q out the range of total Q values 
+					if (totalQ > biggestQ) {	
+						//If the total is higher than the biggest Q value, then total Q will be set as the new biggest Q
+						biggestQ = totalQ;											
+					}
+					//This updates the value Function to add the game and biggest Q into the map
+					valueFunction.put(g, biggestQ);								
+				}
+			}
+		}
 	}
 	
 	/**This method should be run AFTER the train method to extract a policy according to {@link ValueIterationAgent#valueFunction}
@@ -114,10 +149,45 @@ public class ValueIterationAgent extends Agent {
 	 */
 	public Policy extractPolicy()
 	{
-		/*
-		 * YOUR CODE HERE
-		 */
-		return null;
+		//This creates an empty Hashmap for the policies
+		HashMap<Game, Move> p = new HashMap<>();
+
+		//This creates a policy constructor
+		Policy policy = new Policy();				
+
+		//This iterates through the game states within the Hashmap called ValueFunctions
+		for(Game g: valueFunction.keySet()) {
+			//The Biggest Q value is set to the lowest value again 
+			double biggestQ = -10000;
+			//Best is set 
+			Move best = null;
+			//This goes through the list of each possible game moves again
+			for(Move m: g.getPossibleMoves() ) {     //maximising 
+				//The totalQ begins with 0
+				double totalQ = 0;
+				//The variables for Q values that are sPrime, localReward and prob are initialised 
+				for(TransitionProb s: mdp.generateTransitions(g,m)) { 
+					Game sPrime = s.outcome.sPrime;
+					double reward = s.outcome.localReward;
+					double probability = s.prob;
+					//This equation works out Q value within the Bellman equation
+					double valueQ = probability*(reward+(valueFunction.get(sPrime)));
+					totalQ += valueQ;
+				}
+				//This conditional statements maintains the biggest Q out the range of total Q values 
+				if (totalQ > biggestQ) {
+					//This allows the total Q to be saved as the biggest Q
+					biggestQ = totalQ;
+					//This position at m is set to best move  
+					best =  m;
+					//This puts the game object and the best move object into the policy hashmap
+					p.put(g,best);
+					//This initialises the new policy
+					policy = new Policy(p); 
+				}
+			}
+		}
+		return policy;
 	}
 	
 	/**
@@ -136,7 +206,7 @@ public class ValueIterationAgent extends Agent {
 		 */
 		
 		super.policy=extractPolicy();
-		
+
 		if (this.policy==null)
 		{
 			System.out.println("Unimplemented methods! First implement the iterate() & extractPolicy() methods");

@@ -4,7 +4,7 @@ package ticTacToe;
  * A tuple containing an {@link Outcome} object, with its associated probability - this specifies the probability of the transition occurring. 
  * Typically, a list of these objects is returned by a {@link TTTMDP} instance when querying it for the transition probability distribution.
  * @author ae187
- *
+ *S,A,R,S'
  */
 public class TransitionProb {
 	public Outcome outcome;

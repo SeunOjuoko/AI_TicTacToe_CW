@@ -6,7 +6,7 @@ package ticTacToe;
  * From your lectures, this is essentially a (s,a,r,s') tuple, where s is the source state, a is the action taken, r is the reward
  * received locally, and s' is the state we transitioned into.
  * @author ae187
- *
+ * S,S',A,R
  */
 public class Outcome {
 
